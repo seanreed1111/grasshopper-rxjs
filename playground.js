@@ -40,16 +40,30 @@ var interval1 = Rx.Observable.interval(200)
 
 var interval2 = Rx.Observable.interval(100)
 .map(function(i) {return 'Interval2 :'+i})
-.take(50);
+.take(27);
 
-interval1.subscribe(
-  function(x) {console.log(x);},
-  function(err) {console.log('Error is' +err);},
-  function() {console.log('Interval 1 completed')}
-);
+// interval1.subscribe(
+//   function(x) {console.log(x);},
+//   function(err) {console.log('Error is' +err);},
+//   function() {console.log('Interval 1 completed')}
+// );
 
-interval2.subscribe(
-  function(x) {console.log(x);},
-  function(err) {console.log('Error is' +err);},
-  function() {console.log('Interval 2 completed')}
-);
+// interval2.subscribe(
+//   function(x) {console.log(x);},
+//   function(err) {console.log('Error is' +err);},
+//   function() {console.log('Interval 2 completed')}
+// );
+
+// use merge operator
+Rx.Observable.merge(interval1,interval2).startWith(999).take(10)
+            .subscribe(function(x) {console.log(x)});
+
+// use scan operator to reduce observables that are infinite.
+var avg = Rx.Observable.interval(500) 
+.scan(function (prev, cur) {
+return {sum: prev.sum + cur, count: prev.count + 1};
+}, { sum: 0, count: 0 }) 
+.map(function(o) {return o.sum / o.count; })
+.take(55);
+
+var subscription = avg.subscribe( function (x) { console.log('avg:' +x);});
