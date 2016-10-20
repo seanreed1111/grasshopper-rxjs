@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GrassHopper</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header id="header" class="">
+    <p>This is GrassHopper - RxJS!</p> 
+    <p>Press Start to Begin Game.</p>
+  </header>
+
+  <nav>
+    <button id="startButton">Start Game</button>
+    <button id="endButton">End Game</button>    
+  </nav>
+  
+  <section id="board">
+    <div class="square" data-location="0">L</div>
+    <div class="square" data-location="1">L</div>
+    <div class="square" data-location="2">L</div>
+    <div class="square" data-location="3">L</div>
+    <div class="square" data-location="4"></div>
+    <div class="square" data-location="5">R</div>
+    <div class="square" data-location="6">R</div>
+    <div class="square" data-location="7">R</div>
+    <div class="square" data-location="8">R</div>
+  </section>
+
+  <p id="winner"></p>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/4.1.0/rx.all.min.js" type="text/javascript" charset="utf-8" async defer></script>
+  <script src="bundle.js" type="text/javascript"></script>
+</body>
+</html>
