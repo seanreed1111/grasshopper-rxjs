@@ -55,15 +55,15 @@
 // );
 
 // use merge operator
-Rx.Observable.merge(interval1,interval2).startWith(999).take(10)
-            .subscribe(function(x) {console.log(x)});
+// Rx.Observable.merge(interval1,interval2).startWith(999).take(10)
+//             .subscribe(function(x) {console.log(x)});
 
 // use scan operator to reduce observables that are infinite.
-var avg = Rx.Observable.interval(500) 
-.scan(function (prev, cur) {
-return {sum: prev.sum + cur, count: prev.count + 1};
-}, { sum: 0, count: 0 }) 
-.map(function(o) {return o.sum / o.count; })
-.take(55);
+// var avg = Rx.Observable.interval(500) 
+// .scan(function (prev, cur) {return 
+//   {sum: prev.sum + cur, count: prev.count + 1};}, 
+//   { sum: 0, count: 0 }) 
+// .map(function(o) {return o.sum / o.count; })
+// .take(55);
 
-var subscription = avg.subscribe( function (x) { console.log('avg:' +x);});
+// var subscription = avg.subscribe( function (x) { console.log('avg:' +x);});
