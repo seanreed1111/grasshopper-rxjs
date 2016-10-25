@@ -12,7 +12,8 @@ So, to win, you just need to put all the "L"-types to the right side of the boar
 and the "R"-types to the left side of the board.
 
 HOW DO THE GRASSHOPPERS MOVE?
-After you've clicked on <Start>, when you CLICK on a grasshopper with your mouse it will move if it can!
+After you've clicked on  the Start Button, 
+when you CLICK on a grasshopper with your mouse it will move if it can!
 
 Each grasshopper can only move one of two ways
 A) Jump over one adjacent grasshopper (of any type) into the blank space, or,
