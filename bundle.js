@@ -55,7 +55,14 @@
     return newAcc;
   }
 
-  function gameOver(){
+  // functions needed for the VIEW
+  function updateUI(boardArray){
+    squares.forEach(function(square) {
+      square.innerHTML = boardArray[square.dataset.location];
+    })
+  }
+
+    function gameOver(){
     console.log("WINNER!!!!!!!!!!!")
     h1 = document.createElement("h1");
     text1 = document.createTextNode("You Won!! Congratulations!");
@@ -66,10 +73,4 @@
     winner.appendChild(text2);
   }
 
-  // VIEW FUNCTIONS
-  function updateUI(boardArray){
-    squares.forEach(function(square) {
-      square.innerHTML = boardArray[square.dataset.location];
-    })
-  }
 })();
