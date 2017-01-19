@@ -1,16 +1,14 @@
 (function main() {
 
+  var STARTING_POSITION = ["L","L","L","L","","R","R","R","R"];
+  var WINNING_BOARD_STRING = JSON.stringify(["R","R","R","R","","L","L","L","L"]);
+
   var startButton = document.getElementById("startButton");
-
   var board = document.getElementById("board");
-  var squares = document.querySelectorAll(".square")
-
-  var winningBoardString = JSON.stringify(["R","R","R","R","","L","L","L","L"]);
+  var squares = document.querySelectorAll(".square");
 
   var startButtonClick$ = Rx.Observable.fromEvent(startButton, 'click').first();
-
   var boardClick$ = Rx.Observable.fromEvent(board, 'click');
-
 
   var runGame$ = startButtonClick$
   .switchMap(function(e) {return boardClick$})
@@ -19,44 +17,44 @@
   .scan(
     function(acc, location){
       if( isValidMove(acc, location) ){
-        acc.boardArray = updateBoard(acc.boardArray, acc.indexOfBlank, location);
-        acc.indexOfBlank = location;
+        acc = updateAcc(acc, location);
       }
       return acc;
     },
-      {boardArray: ["L","L","L","L","","R","R","R","R"],
-       indexOfBlank: ["L","L","L","L","","R","R","R","R"].indexOf("")
+      {boardArray: STARTING_POSITION.slice(),
+       indexOfBlank: STARTING_POSITION.indexOf("")
       }
   )
 
-
-  var updateBoard$ = runGame$
+  var updateUI$ = runGame$
   .do(function(acc) {updateUI(acc.boardArray)})
   .map(function(acc) {return JSON.stringify(acc.boardArray)})
-  .filter(function(currentBoardString){return currentBoardString === winningBoardString})
+  .filter(function(currentBoardString){return currentBoardString === WINNING_BOARD_STRING})
   .do(function(isWinner){ if(isWinner) {gameOver()}})
 
 
-// Subscribe
-  updateBoard$.subscribe(
+// Subscribe to make the observable 'hot'
+  updateUI$.subscribe(
     function(x){console.log("from currentBoard$ boardString: " +x);},
     function(err) {console.log('err: '+err)},
     function() {console.log('congratulations! You finished the game!')}
     );
 
 
-
 // functions needed for the MODEL
 
   function isValidMove(acc, location){
-    return Math.abs(location - acc.indexOfBlank) <= 2  && location != acc.indexOfBlank
+    return Math.abs(location - acc.indexOfBlank) <= 2  && location !== acc.indexOfBlank
   }
 
-  function updateBoard(board, indexOfBlank, location) {
-    var newBoard = board.slice(); // slice with no args returns an INDEPENDENT COPY of the array
-    newBoard[indexOfBlank] = newBoard[location];
-    newBoard[location] = "";
-    return newBoard;
+  function updateAcc(acc, location) {
+    var newAcc = {};
+    newAcc.indexOfBlank = location;
+    newAcc.boardArray = acc.boardArray.slice();
+
+    newAcc.boardArray[acc.indexOfBlank] = newAcc.boardArray[location];
+    newAcc.boardArray[location] = "";
+    return newAcc;
   }
 
   function gameOver(){
@@ -69,12 +67,10 @@
     winner.appendChild(h1).appendChild(text1).appendChild(text2);
   }
 
-  // VIEW
+  // VIEW FUNCTIONS
   function updateUI(boardArray){
     squares.forEach(function(square) {
       square.innerHTML = boardArray[square.dataset.location];
     })
   }
-
-
 })();
