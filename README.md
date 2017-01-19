@@ -2,6 +2,8 @@
 RxJS version of the Grasshopper
 ===============================
 
+Link to Brooklyn JS talk: [Grasshopper Done Two Ways - Vanilla JS vs. RxJs](https://docs.google.com/presentation/d/16Ylz_2xWelr4W4QG15XmID6vd6ugAvZqQIXuHe20YBE/edit?usp=sharing)
+
 HOW DO I PLAY THIS GAME?
 ========================
 Grasshopper is a puzzle game where you start off with  
