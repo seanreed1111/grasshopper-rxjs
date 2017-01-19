@@ -29,13 +29,14 @@
   var updateUI$ = runGame$
   .do(function(acc) {updateUI(acc.boardArray)})
   .map(function(acc) {return JSON.stringify(acc.boardArray)})
-  .filter(function(currentBoardString){return currentBoardString === WINNING_BOARD_STRING})
+  .filter(function(currentBoardString)
+    {return currentBoardString === WINNING_BOARD_STRING})
   .do(function(isWinner){ if(isWinner) {gameOver()}})
 
 
 // Subscribe to make the observable 'hot'
   updateUI$.subscribe(
-    function(x){console.log("from currentBoard$ boardString: " +x);},
+    function(x){console.log("currentBoard$ boardString: " +x);},
     function(err) {console.log('err: '+err)},
     function() {console.log('congratulations! You finished the game!')}
     );
@@ -64,7 +65,8 @@
     text2 = document.createTextNode("Press Cmd-R to Play Again");
 
     winner = document.getElementById("winner")
-    winner.appendChild(h1).appendChild(text1).appendChild(text2);
+    winner.appendChild(h1).appendChild(text1);
+    winner.appendChild(text2);
   }
 
   // VIEW FUNCTIONS
