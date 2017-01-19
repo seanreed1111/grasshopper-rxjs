@@ -18,7 +18,7 @@
   .filter(function(location) {return location != undefined})
   .scan(
     function(acc, location){
-      if( isValidMove(acc.indexOfBlank, location) ){
+      if( isValidMove(acc, location) ){
         acc.boardArray = updateBoard(acc.boardArray, acc.indexOfBlank, location);
         acc.indexOfBlank = location;
       }
@@ -28,7 +28,6 @@
        indexOfBlank: ["L","L","L","L","","R","R","R","R"].indexOf("")
       }
   )
-
 
 
   var updateBoard$ = runGame$
@@ -49,8 +48,8 @@
 
 // functions needed for the MODEL
 
-  function isValidMove(indexOfBlank, location){
-    return Math.abs(location - indexOfBlank) <= 2  && location != indexOfBlank
+  function isValidMove(acc, location){
+    return Math.abs(location - acc.indexOfBlank) <= 2  && location != acc.indexOfBlank
   }
 
   function updateBoard(board, indexOfBlank, location) {
