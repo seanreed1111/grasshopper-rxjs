@@ -13,7 +13,6 @@
   var runGame$ = startButtonClick$
   .switchMap(function(e) {return boardClick$})
   .map(function(e) {return e.target.dataset.location})
-  .filter(function(location) {return location != undefined})
   .scan(
     function(acc, location){
       if( isValidMove(acc, location) ){
@@ -25,17 +24,15 @@
        indexOfBlank: STARTING_POSITION.indexOf("")
       }
   )
-
-  var updateUI$ = runGame$
   .do(function(acc) {updateUI(acc.boardArray)})
   .map(function(acc) {return JSON.stringify(acc.boardArray)})
   .filter(function(currentBoardString)
     {return currentBoardString === WINNING_BOARD_STRING})
   .do(function(isWinner){ if(isWinner) {gameOver()}})
-
+  .takeWhile(function(isWinner) {return isWinner === false})
 
 // Subscribe to make the observable 'hot'
-  updateUI$.subscribe(
+  runGame$.subscribe(
     function(x){console.log("currentBoard$ boardString: " +x);},
     function(err) {console.log('err: '+err)},
     function() {console.log('congratulations! You finished the game!')}
