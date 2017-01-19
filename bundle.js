@@ -1,4 +1,4 @@
-(function() {
+(function main() {
 
   var startButton = document.getElementById("startButton");
 
@@ -18,57 +18,64 @@
   .filter(function(location) {return location != undefined})
   .scan(
     function(acc, location){
-      if( isValidMove(acc.indexOfBlank, location) ){ 
+      if( isValidMove(acc.indexOfBlank, location) ){
         acc.boardArray = updateBoard(acc.boardArray, acc.indexOfBlank, location);
         acc.indexOfBlank = location;
       }
-      return acc; //returns the previous accumulator if not a valid move, otherwise updates it
+      return acc;
     },
-      {boardArray: ["L","L","L","L","","R","R","R","R"], 
+      {boardArray: ["L","L","L","L","","R","R","R","R"],
        indexOfBlank: ["L","L","L","L","","R","R","R","R"].indexOf("")
       }
-  ).do(function(acc) {updateUI(acc.boardArray)}) //side effects
+  )
 
-  var currentBoard$ = runGame$
+
+
+  var updateBoard$ = runGame$
+  .do(function(acc) {updateUI(acc.boardArray)})
   .map(function(acc) {return JSON.stringify(acc.boardArray)})
   .filter(function(currentBoardString){return currentBoardString === winningBoardString})
-  .do(function(isWinner) { // side effect
-    if(isWinner) {gameOver();}
-  })
+  .do(function(isWinner){ if(isWinner) {gameOver()}})
 
 
-  currentBoard$.subscribe(
+// Subscribe
+  updateBoard$.subscribe(
     function(x){console.log("from currentBoard$ boardString: " +x);},
     function(err) {console.log('err: '+err)},
     function() {console.log('congratulations! You finished the game!')}
     );
+
+
+
+// functions needed for the MODEL
 
   function isValidMove(indexOfBlank, location){
     return Math.abs(location - indexOfBlank) <= 2  && location != indexOfBlank
   }
 
   function updateBoard(board, indexOfBlank, location) {
-    var newBoard = board.slice(); // slice with no args returns an INDEPENDENT COPY of the array 
+    var newBoard = board.slice(); // slice with no args returns an INDEPENDENT COPY of the array
     newBoard[indexOfBlank] = newBoard[location];
     newBoard[location] = "";
     return newBoard;
   }
 
-
-  // VIEW: side effects
-  function updateUI(boardArray){
-    squares.forEach(function(square) {square.innerHTML = boardArray[square.dataset.location];})
-  }
-
   function gameOver(){
-      console.log("WINNER!!!!!!!!!!!")
-      h1 = document.createElement("h1");
-      text1 = document.createTextNode("You Won!! Congratulations!");
-      text2 = document.createTextNode("Press Cmd-R to Play Again");
+    console.log("WINNER!!!!!!!!!!!")
+    h1 = document.createElement("h1");
+    text1 = document.createTextNode("You Won!! Congratulations!");
+    text2 = document.createTextNode("Press Cmd-R to Play Again");
 
-      winner = document.getElementById("winner")
-      winner.appendChild(h1).appendChild(text1);
-      winner.appendChild(text2);
+    winner = document.getElementById("winner")
+    winner.appendChild(h1).appendChild(text1).appendChild(text2);
   }
 
-})(); 
+  // VIEW
+  function updateUI(boardArray){
+    squares.forEach(function(square) {
+      square.innerHTML = boardArray[square.dataset.location];
+    })
+  }
+
+
+})();

@@ -43,27 +43,27 @@ For example, if we again represent the *starting* position as:
 
 There are only *four* possible valid moves from this starting position:  
 
-Either Position 4 MOVES TO Position 5..  
+Position 4 => Position 5  
 ---------------------------------------
 `L L L * L R R R R`  
 `1 2 3 4 5 6 7 8 9`  
 
 
-OR Position 6 MOVES TO Position 5..
+Position 6 => Position 5
 ---------------------------------------
 `L L L L R * R R R`  
 `1 2 3 4 5 6 7 8 9`  
 
 
 
-OR Position 3 JUMPS TO Position 5..
+Position 3 JUMPS TO Position 5..
 ---------------------------------------
 `L L * L L R R R R`  
 `1 2 3 4 5 6 7 8 9`   
 
 
 
-OR Position 7 JUMPS TO Position 5..
+Position 7 JUMPS TO Position 5..
 ---------------------------------------
 `L L L L R R * R R`  
 `1 2 3 4 5 6 7 8 9`   
