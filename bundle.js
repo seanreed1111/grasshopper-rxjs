@@ -28,15 +28,15 @@
   .map(function(acc) {return JSON.stringify(acc.boardArray)})
   .filter(function(currentBoardString)
     {return currentBoardString === WINNING_BOARD_STRING})
-  .do(function(isWinner){ if(isWinner) {gameOver()}})
+//  .do(function(isWinner){ if(isWinner) {gameOver()}})
   .takeWhile(function(isWinner) {return isWinner === false})
 
 // Subscribe to make the observable 'hot'
   runGame$.subscribe(
     function(x){console.log("currentBoard$ boardString: " +x);},
     function(err) {console.log('err: '+err)},
-    function() {console.log('congratulations! You finished the game!')}
-    );
+    function() {gameOver()}
+  );
 
 
 // functions needed for the MODEL
@@ -63,14 +63,13 @@
   }
 
     function gameOver(){
-    console.log("WINNER!!!!!!!!!!!")
-    h1 = document.createElement("h1");
-    text1 = document.createTextNode("You Won!! Congratulations!");
-    text2 = document.createTextNode("Press Cmd-R to Play Again");
+      console.log("Congratulations You've Finished the Game");
+      h1 = document.createElement("h1");
+      text1 = document.createTextNode("You Won!! Congratulations!");
+      text2 = document.createTextNode("Press Cmd-R to Play Again");
 
-    winner = document.getElementById("winner")
-    winner.appendChild(h1).appendChild(text1);
-    winner.appendChild(text2);
-  }
-
+      winner = document.getElementById("winner")
+      winner.appendChild(h1).appendChild(text1);
+      winner.appendChild(text2);
+    }
 })();
